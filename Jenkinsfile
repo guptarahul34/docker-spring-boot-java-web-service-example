@@ -13,7 +13,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'mvn clean clean'
+                sh 'mvn clean install'
             }
         }
 
@@ -25,7 +25,7 @@ pipeline {
 
         stage('Push Docker Image') {
             steps {
-                
+
                 sh '''
                     echo $DOCKERHUB_PSW | docker login -u $DOCKERHUB_USR --password-stdin
                     docker push rahulgupta9794/spring-boot-docker:$BUILD_NUMBER               

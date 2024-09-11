@@ -13,7 +13,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'mvn clean package -Dmaven.clean.skip=true'
+                sh 'mvn clean clean'
             }
         }
 
@@ -23,13 +23,14 @@ pipeline {
             }
         }
 
-        // stage('Push Docker Image') {
-        //     steps {
-        //         sh '''
-        //             echo $DOCKERHUB_PSW | docker login -u $DOCKERHUB_USR --password-stdin
-        //             docker push rahulgupta9794/spring-boot-docker:$BUILD_NUMBER               
-        //         '''
-        //     }
-        // }
+        stage('Push Docker Image') {
+            steps {
+                
+                sh '''
+                    echo $DOCKERHUB_PSW | docker login -u $DOCKERHUB_USR --password-stdin
+                    docker push rahulgupta9794/spring-boot-docker:$BUILD_NUMBER               
+                '''
+            }
+        }
     }
 }
